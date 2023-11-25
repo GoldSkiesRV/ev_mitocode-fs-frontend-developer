@@ -1,0 +1,69 @@
+<router-outlet></router-outlet>
+
+<mat-form-field>
+  <mat-label>Filter</mat-label>
+  <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia">
+</mat-form-field>
+
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort>
+
+      <!-- Name ID -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th> 
+        <td mat-cell *matCellDef="let row"> {{row.idVitalS}} </td> 
+      </ng-container>
+
+      <!-- Name Patient -->
+      <ng-container matColumnDef="patient">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Patient </th>
+        <td mat-cell *matCellDef="let row"> {{conPatientInfo(row)}} </td>
+      </ng-container>
+
+      <!-- Date Column -->
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+        <td mat-cell *matCellDef="let row"> {{row.date}} </td>
+      </ng-container>
+
+      <!-- Temp Column -->
+      <ng-container matColumnDef="temperature">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Temperature </th>
+        <td mat-cell *matCellDef="let row"> {{row.temperature}} </td>
+      </ng-container>
+      <!-- Pulse Column -->
+      <ng-container matColumnDef="pulse">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Pulse </th>
+        <td mat-cell *matCellDef="let row"> {{row.pulse}} </td>
+      </ng-container>
+      <ng-container matColumnDef="respirationRate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Respiration Rate </th>
+        <td mat-cell *matCellDef="let row"> {{row.respirationRate}} </td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let row">
+            <button mat-button color="primary" [routerLink]="['edit', row.idVitalS]">
+                <mat-icon>mode_edit</mat-icon>
+            </button>
+
+            <button mat-button color="accent" (click)="delete(row.idVitalS)">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </td>
+    </ng-container>
+      
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[ 4, 10, 100]" [length]="totalElements" aria-label="Select page" (page)="showMore($event)"></mat-paginator>
+
+  <button mat-fab color="primary" style="float: right;" routerLink="/pages/vitals/new">
+    <mat-icon>add</mat-icon>
+</button>
+  
+</div>

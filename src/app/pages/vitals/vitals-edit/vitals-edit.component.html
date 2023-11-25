@@ -1,0 +1,44 @@
+
+<div style="display: flex; justify-content: flex-end; margin-top: 10px;">
+    <button mat-raised-button color="primary" *ngIf="!isEdit" (click)="openDialog()">New patients</button>
+</div>
+
+<form [formGroup]="form" class="example-container" (submit)="operate()" #frmPatient="ngForm">
+
+    <div [hidden]="true">
+        <mat-form-field>
+            <input matInput placeholder="ID" required formControlName="idVitalS">
+        </mat-form-field>
+    </div>
+
+    <mat-form-field>
+        <mat-select placeholder="Select Patient" [formControl]="patientControl">
+            <mat-option *ngFor="let p of patients" [value]="p">
+                {{p.firstName}} {{p.lastName}}
+            </mat-option>
+            
+        </mat-select>
+    </mat-form-field>
+
+
+    <mat-form-field appearance="fill">
+        <mat-label>Select a date</mat-label>
+        <input matInput [matDatepicker]="picker" [min]="minDate" formControlName="date">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="Temperature" formControlName="temperature">
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="Pulse" formControlName="pulse">
+    </mat-form-field>
+    
+    <mat-form-field>
+        <input matInput placeholder="Respiration Rate" formControlName="respirationRate">
+    </mat-form-field>
+    
+    <button mat-raised-button color="primary" (click)="operate()">Done</button>
+    <button mat-raised-button color="accent" routerLink="/pages/vitals">Cancel</button>
